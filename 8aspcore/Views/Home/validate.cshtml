@@ -89,11 +89,11 @@
     <script>
         //dinh nghia hama kiem tra
         function kiemtraemail(value, element) {
-            let parttern = "/^[a-z]{2,}@@[a-z]{2,}(.[a - z]{2,6})+$/";
-            return parttern.test(value) || this.optionnal(emlement);
-            
+            let parttern = "/^[a-z]{2,}@@[a-z]{2,}(.[a - z]{2,6})+$/g";
+            return parttern.test(value) || this.optional(emlement);
         }
-
+        // buoc 2
+        $.validator.addMethod("Emailcorrect", kiemtraemail,"chua dung dinh dang email")
         $(function () {
             $("#formdk").validate({
                 rules: {
@@ -111,7 +111,8 @@
                     NgaySinh: { date: true },
                     Email: {
                         required: true,
-                        email: true
+                        email: true,
+                        Emailcorrect: true
                     },
                     XacNhanEmail: {
                         equalTo: "input[name= 'Email']"
@@ -122,6 +123,7 @@
 
                 },
                 messages: {
+                    Email: {required:"chua nhap email"},
                     HeSo: {digits:"",min:"toi da la 1"},
                     Diem: {number:"la so thuc",range:"so diem tu 0 den 10"},
                     Hinh: { extension: "Chi nhan gif|png|jpg"},
